@@ -30,7 +30,7 @@ void usart_init(USART_TypeDef * USARTx, uint32_t baudrate){//funcion de inicio
         GPIOA->CRL&=~(0xF<<rx*4);
         GPIOA->CRL|=(0x4<<rx*4);
 
-        float div=(16*baudrate)/36000000;
+        float div=36000000/(16*baudrate);
         int mattissa=div;
         int fraction=(div-mattissa)*100;
         USART2->BRR=(fraction&0xf)|(mattissa<<4);
