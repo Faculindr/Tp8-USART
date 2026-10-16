@@ -14,7 +14,7 @@ void usart_init(USART_TypeDef * USARTx, uint32_t baudrate){//funcion de inicio
 
         clock_72Mhz();//configuramos el clock a 72Mhz
 
-        float div=(16*baudrate)/72000000;
+        float div=72000000/(16*baudrate);
         int mattissa=div;
         int fraction=(div-mattissa)*100;
         USART1->BRR=(fraction&0xf)|(mattissa<<4);
