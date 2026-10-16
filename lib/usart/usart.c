@@ -46,7 +46,7 @@ void usart_init(USART_TypeDef * USARTx, uint32_t baudrate){//funcion de inicio
         GPIOB->CRH&=~(0xF<<(rx%8)*4);
         GPIOB->CRH|=(0x4<<(rx%8)*4);
 
-        float div=(16*baudrate)/36000000;//formula para la velocidad de comunicacion
+        float div=36000000/(16*baudrate);//formula para la velocidad de comunicacion
         int mattissa=div;//lo pasamos a entero
         int fraction=(div-mattissa)*100;//nos quedamos con la parte fraccional
         USART3->BRR=(fraction&0xf)|(mattissa<<4);//le pasamos al registro la parte de la fraccion(los primeros 4 bits) y la parte entera desplazada 4 bits(los otros 12)
