@@ -1,4 +1,5 @@
 #include "usart.h"
+#include "clk_maximizer.h"
 #include "stm32f103xb.h"
 
 
@@ -12,11 +13,11 @@ void usart_init(USART_TypeDef * USARTx, uint32_t baudrate){//funcion de inicio
         GPIOA->CRH&=~(0xF<<(rx%8)*4);
         GPIOA->CRH|=(0x4<<(rx%8)*4);
 
-        clock_72Mhz();//configuramos el clock a 72Mhz
+        clock_72MHz();//configuramos el clock a 72Mhz
 
-        float div=72000000/(16*baudrate);
+        float div=(72000000/(16*baudrate));
         int mattissa=div;
-        int fraction=(div-mattissa)*100;
+        int fraction=((div-mattissa)*100);
         USART1->BRR=(fraction&0xf)|(mattissa<<4);
 
     }
@@ -59,8 +60,8 @@ void usart_init(USART_TypeDef * USARTx, uint32_t baudrate){//funcion de inicio
 }
 
 void usart_send_char(USART_TypeDef * USARTx, uint8_t data){
-    while(!(USARTx->SR&USART_SR_TXE));//esperamos a que el registro este disponible
     USARTx->DR=data;//cuando este en 1 enviamos el caracter
+    while(!(USARTx->SR&USART_SR_TXE));//esperamos a que el registro este disponible
     
 }
 
